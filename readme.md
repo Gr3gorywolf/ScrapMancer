@@ -10,15 +10,14 @@
 - **Flexible Scheduling**: Use cron syntax to set up job timings.
 
 ## Getting Started
-
+ 
 ### Installation
-
 1. Clone the repository:
     ```bash
     git clone https://github.com/yourusername/scrapmancer.git
     cd scrapmancer
     ```
-
+ 
 2. Install dependencies:
     ```bash
     npm install
@@ -40,15 +39,19 @@
     - `description`: Optional. A brief description of the job.
     - `cron`: The cron tab value specifying the schedule. For more information on cron syntax, check the [Crontab.guru](https://crontab.guru/) website.
 
+
+### Docker installation
+Yep, this application is dockerized so you just have to run ```docker-compose up -d```
+
 ### Usage
 
 1. Start the Scrapmancer service:
     ```bash
-    npm start
+    npm run runner
     ```
-
 2. Scrapmancer will read the job files and execute them according to the specified schedule.
 
+ 
 ## Future Plans
 
 - **Advanced CLI**: An enhanced command-line interface to simplify job and test creation.

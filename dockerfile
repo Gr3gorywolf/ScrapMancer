@@ -10,6 +10,7 @@ COPY package.json pnpm-lock.yaml* ./
 # Install dependencies using pnpm
 RUN npm install
 RUN npx playwright install
+RUN npx playwright install-deps
 # Copy the rest of the application code
 COPY . .
 

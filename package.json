@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "runner": "tsc && nodemon --watch jobs --ext json --exec \"node ./build/runner.js\""
+    "runner": "tsc && nodemon --watch ./jobs --ext json --exec \"node ./build/runner.js\""
   },
   "keywords": [],
   "author": "",
