@@ -27,8 +27,12 @@ export const parseJobsFromFolder = ():Job[] =>{
 }
 
 
-export const executeJob = (job:Job, onFinish:(hasError:boolean, output:any)=>void) =>{
-    const testRun = spawn('npx', ['playwright', 'test', job.triggerTest], {shell: true});
+export const executeJob = (job:Job, onFinish:(hasError:boolean, output:any)=>void, inputData?:any) =>{
+    const env = Object.create(process.env);
+    if(inputData){
+      env.INPUT_DATA = JSON.stringify(inputData);
+    }
+    const testRun = spawn('npx', ['playwright', 'test', job.triggerTest], {shell: true, env});
     let hasError = false;
     let outputs:any[] = [];
     testRun.stdout.on('data', (data) => {
@@ -39,12 +43,10 @@ export const executeJob = (job:Job, onFinish:(hasError:boolean, output:any)=>voi
           logWithColor(`${job.name} >> ${data}`,ConsoleColors.blue);
         }
       });
-      // Listen to the standard error (stderr) stream
       testRun.stderr.on('data', (data) => {
         logWithColor(`${job.name} - error >> ${data}`,ConsoleColors.red);
         hasError = true;
       });
-      // Listen for the 'close' event, which signals that the process is done
       testRun.on('close', (code) => {
         logWithColor(`${job.name} is done!`, ConsoleColors.green);
         const output = outputs.length > 0 ? 
@@ -52,7 +54,6 @@ export const executeJob = (job:Job, onFinish:(hasError:boolean, output:any)=>voi
         : null;
         onFinish(hasError, output);
       });
-      // Optional: Listen for the 'error' event if there's an issue starting the process
       testRun.on('error', (error) => {
         logWithColor(`Error executing the job ${job.name}: ${error.message}`, ConsoleColors.red);
         hasError = true;

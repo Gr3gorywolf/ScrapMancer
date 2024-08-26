@@ -1,0 +1,6 @@
+{
+    "route":"/sample",
+    "method":"GET",
+    "triggerTest":"example",
+    "description":"Just a sample endpoint"
+}

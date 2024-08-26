@@ -1,0 +1,6 @@
+{
+    "route":"/sample/login",
+    "method":"POST",
+    "triggerTest":"login-example",
+    "description":"Just a sample endpoint"
+}

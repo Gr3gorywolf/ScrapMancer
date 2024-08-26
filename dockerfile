@@ -13,7 +13,3 @@ RUN npx playwright install
 RUN npx playwright install-deps
 # Copy the rest of the application code
 COPY . .
-
-
-# Specify the command to run the application
-CMD ["npm", "run", "scheduler"]

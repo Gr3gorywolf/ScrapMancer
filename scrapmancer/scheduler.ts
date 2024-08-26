@@ -12,9 +12,8 @@ const addJobRunner = (job:Job) =>{
         return;
     }
     logWithColor("Running >> " + job.name, ConsoleColors.magenta);
-    executeJob(job, (hasError, outputData)=>{
+    executeJob(job, ()=>{
         runningJobs.delete(job.name);
-        console.log("Output>>",outputData);
     });
     runningJobs.add(job.name); 
    });

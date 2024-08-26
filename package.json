@@ -4,19 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scheduler": "tsc && nodemon --watch ./jobs --ext json --exec \"node ./build/scheduler.js\""
+    "scheduler": "tsc && nodemon --watch ./jobs --ext json --exec \"node ./build/scheduler.js\"",
+    "server": "tsc && nodemon --watch ./endpoints --ext json --exec \"node ./build/server.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.46.1",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.5.0",
     "@types/node-cron": "^3.0.11",
     "nodemon": "^3.1.4",
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "node-cron": "^3.0.3"
   }
 }

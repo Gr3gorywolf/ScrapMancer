@@ -1,9 +1,18 @@
 import { resultsOutputLiteral } from "../utils/constants";
+import process from "node:process";
 
 export const writeResultsOutput = (results: any) => { 
     console.log(`${resultsOutputLiteral}${JSON.stringify(results)}${resultsOutputLiteral}`);
 }
 
+
+export const getTestInputData = ():any => {
+    const inputData = process.env.INPUT_DATA;
+    if (inputData) {
+      return JSON.parse(inputData);
+    }
+    return null;
+  }
 
 export const getLogWithoutOutput = (output:string) => {
     if(!output.includes(resultsOutputLiteral)){

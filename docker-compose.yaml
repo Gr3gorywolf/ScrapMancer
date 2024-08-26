@@ -1,10 +1,21 @@
 version: '3.8'
 
 services:
-  app:
+  scheduler:
     build: .
+    command: npm run scheduler
     volumes:
-      - ./jobs:/app/jobs
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+  server:
+    build: .
+    command: npm run server
+    ports:
+      - "4848:4848"
+    volumes:
+      - .:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development

@@ -6,7 +6,8 @@ test('has title', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
   writeResultsOutput({
-    "has-title": "yes"
+    "pageTitle": await page.title(),
+    "slogan": await page.locator(".hero__title").innerText()
   });
 });
 
@@ -16,9 +17,7 @@ test('get started link', async ({ page }) => {
   // Click the get started link.
   await page.getByRole('link', { name: 'Get started' }).click();
 
-  writeResultsOutput({
-    "get-started-link": "clicked"
-  });
+ 
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
