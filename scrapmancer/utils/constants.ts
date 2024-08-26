@@ -8,3 +8,5 @@ export enum ConsoleColors {
     cyan = '\x1b[36m',
     white = '\x1b[37m'
   };
+
+export const resultsOutputLiteral = "<results-output>"

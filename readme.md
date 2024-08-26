@@ -47,7 +47,7 @@ Yep, this application is dockerized so you just have to run ```docker-compose up
 
 1. Start the Scrapmancer service:
     ```bash
-    npm run runner
+    npm run scheduler
     ```
 2. Scrapmancer will read the job files and execute them according to the specified schedule.
 

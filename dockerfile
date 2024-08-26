@@ -16,4 +16,4 @@ COPY . .
 
 
 # Specify the command to run the application
-CMD ["npm", "run", "runner"]
+CMD ["npm", "run", "scheduler"]

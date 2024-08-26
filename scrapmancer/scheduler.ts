@@ -12,14 +12,15 @@ const addJobRunner = (job:Job) =>{
         return;
     }
     logWithColor("Running >> " + job.name, ConsoleColors.magenta);
-    executeJob(job, ()=>{
+    executeJob(job, (hasError, outputData)=>{
         runningJobs.delete(job.name);
+        console.log("Output>>",outputData);
     });
-    runningJobs.add(job.name);
-   }); 
+    runningJobs.add(job.name); 
+   });
+   logWithColor("Job: " + job.name + " Scheduled! ✓", ConsoleColors.green);
 }
 
-for (const job of jobs) {
-    logWithColor("Job: " + job.name + " Scheduled! ✓", ConsoleColors.green);
+for (const job of jobs) { 
     addJobRunner(job);
 }

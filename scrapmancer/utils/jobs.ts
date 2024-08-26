@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import { logWithColor } from "./console";
 import { ConsoleColors } from "./constants";
+import { readResultsOutput } from "../test-helpers";
 
 export const parseJobsFromFolder = ():Job[] =>{
     const parsedJobs:Job[] = [];
@@ -26,26 +27,34 @@ export const parseJobsFromFolder = ():Job[] =>{
 }
 
 
-export const executeJob = (job:Job, onFinish:()=>void) =>{
+export const executeJob = (job:Job, onFinish:(hasError:boolean, output:any)=>void) =>{
     const testRun = spawn('npx', ['playwright', 'test', job.triggerTest], {shell: true});
-
+    let hasError = false;
+    let outputs:any[] = [];
     testRun.stdout.on('data', (data) => {
-        logWithColor(`${job.name} >> ${data}`,ConsoleColors.blue);
+        const outputResult = readResultsOutput(data.toString());
+        if(outputResult){
+          outputs.push(outputResult);
+        }else{
+          logWithColor(`${job.name} >> ${data}`,ConsoleColors.blue);
+        }
       });
-      
       // Listen to the standard error (stderr) stream
       testRun.stderr.on('data', (data) => {
         logWithColor(`${job.name} - error >> ${data}`,ConsoleColors.red);
+        hasError = true;
       });
-      
       // Listen for the 'close' event, which signals that the process is done
       testRun.on('close', (code) => {
         logWithColor(`${job.name} is done!`, ConsoleColors.green);
-        onFinish();
+        const output = outputs.length > 0 ? 
+        outputs.length > 1 ? outputs : outputs[0]
+        : null;
+        onFinish(hasError, output);
       });
-      
       // Optional: Listen for the 'error' event if there's an issue starting the process
       testRun.on('error', (error) => {
         logWithColor(`Error executing the job ${job.name}: ${error.message}`, ConsoleColors.red);
+        hasError = true;
       });
 }
