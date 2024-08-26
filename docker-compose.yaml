@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./jobs:/app/jobs
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
