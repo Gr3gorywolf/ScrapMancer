@@ -2,5 +2,6 @@
     "route":"/sample",
     "method":"GET",
     "triggerTest":"example",
-    "description":"Just a sample endpoint"
+    "description":"Just a sample endpoint",
+    "cacheKey":"sample-cache"
 }

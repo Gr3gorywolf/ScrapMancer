@@ -4,6 +4,9 @@ import fs from "node:fs";
 import process from "node:process";
 import path from "node:path";
 import { executeJob } from "./jobs";
+import { getCache, setCache } from "./caches";
+import { logWithColor } from "./console";
+import { ConsoleColors } from "./constants";
 
 export const parseEndpointsFromFolder = ():Endpoint[] =>{
     const parsedJobs:Endpoint[] = [];
@@ -32,6 +35,14 @@ export const addEndpoint = (endpoint:Endpoint, server:Express)=>{
         if(['POST','PUT'].includes(req.method)){
             inputData = req.body;
         }
+        if(endpoint.cacheKey){
+            const cacheData = getCache(endpoint.cacheKey, inputData);
+            if(cacheData){
+                logWithColor(`Cache ${ endpoint.cacheKey} retrieved for ${endpoint.method}:${endpoint.route}` , ConsoleColors.green);
+                res.send(cacheData);
+                return;
+            }
+        }
 
         executeJob({
             name:endpoint.route,
@@ -45,6 +56,10 @@ export const addEndpoint = (endpoint:Endpoint, server:Express)=>{
                 return;
             }
             res.send(outputData);
+            if(endpoint.cacheKey){
+                setCache(endpoint.cacheKey, outputData, inputData);
+                logWithColor(`Cache ${ endpoint.cacheKey} set for ${endpoint.method}:${endpoint.route}` , ConsoleColors.green);
+            }
         },inputData);
 
     });

@@ -3,5 +3,5 @@ export interface Endpoint {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     triggerTest: string;
     description?:string;
-    cacheTimeSecs?: number;
+    cacheKey?: string;
 }
